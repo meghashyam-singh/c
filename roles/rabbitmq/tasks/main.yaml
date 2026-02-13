@@ -1,0 +1,34 @@
+- name: setup rabbitmq
+  ansible.builtin.copy:
+    src: rabbitmq.repo
+    dest: /etc/yum.repos.d/rabbitmq.repo
+
+- name: install rabbitmq
+  ansible.builtin.package:
+    name: rabbitmq-server
+    state: present
+
+- name: create rabbitmq user
+  community.rabbitmq.rabbitmq_user:
+   user: roboshop
+   password: roboshop123
+   state: present
+   permisiions:
+    - vhost: /
+      read_priv: .*
+      write-priv: .*
+      configure-priv: .*
+
+- name: start and enable rabbitmq server
+  ansible.builtin.service:
+    name: rabbitmq-server
+    state: started
+    enabled: yes
+
+- name: check rabbitmq port
+  ansible.builtin.command: netstat -lntp
+  register: rabbit
+
+- name: print rabbitmq port
+  ansible.builtin.debug:
+    msg: "{{ rabbit }}"
