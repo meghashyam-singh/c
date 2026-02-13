@@ -5,3 +5,24 @@
 
   roles:
    - mongodb
+
+- name: setup mysql
+  hosts: mysql
+  become: yes
+
+  roles:
+   - mysql
+
+- name: setup redis
+  hosts: redis
+  become: yes
+
+  roles:
+   - redis
+
+- name: setup rabbitmq
+  hosts: rabbitmq
+  become: yes
+
+  roles:
+   - rabbitmq
