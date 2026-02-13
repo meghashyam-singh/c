@@ -16,8 +16,8 @@
    permissions:
     - vhost: /
       read_priv: .*
-      write-priv: .*
-      configure-priv: .*
+      write_priv: .*
+      configure_priv: .*
 
 - name: start and enable rabbitmq server
   ansible.builtin.service:
