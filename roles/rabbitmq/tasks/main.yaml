@@ -8,6 +8,12 @@
     name: rabbitmq-server
     state: present
 
+- name: start and enable rabbitmq server
+  ansible.builtin.service:
+    name: rabbitmq-server
+    state: started
+    enabled: yes
+
 - name: create rabbitmq user
   community.rabbitmq.rabbitmq_user:
    name: roboshop
@@ -18,12 +24,6 @@
       read_priv: .*
       write_priv: .*
       configure_priv: .*
-
-- name: start and enable rabbitmq server
-  ansible.builtin.service:
-    name: rabbitmq-server
-    state: started
-    enabled: yes
 
 - name: check rabbitmq port
   ansible.builtin.command: netstat -lntp
