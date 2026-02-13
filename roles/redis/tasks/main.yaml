@@ -1,0 +1,30 @@
+- name: disable
+  ansible.builtin.command: dnf module disable redis -y
+
+- name: enable
+  ansible.builtin.command: dnf module enable redis:7 -y
+
+- name: disable
+  ansible.builtin.package:
+    name: redis
+    state: present
+
+- name: change config
+  ansible.builtin.replace:
+    path: /etc/redis/redis.conf
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+
+- name: protected mode
+  ansible.builtin.lineinfile:
+    path: /etc/redis/redis.conf
+    regexp: 'protected-mode'
+    line: 'protected-mode no'
+
+- name: check redis port
+  ansible.builtin.command: netstat -lntp
+  register: redis
+
+- name: print redis port
+  ansible.builtin.debug:
+    msg: "{{ redis }}"

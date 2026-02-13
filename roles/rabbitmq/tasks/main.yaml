@@ -13,7 +13,7 @@
    name: roboshop
    password: roboshop123
    state: present
-   permisiions:
+   permissions:
     - vhost: /
       read_priv: .*
       write-priv: .*
