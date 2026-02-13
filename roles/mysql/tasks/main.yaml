@@ -1,0 +1,21 @@
+- name: setup mysql
+  ansible.builtin.package:
+    name: mysql-server
+    state: present
+
+- name: start and enable
+  ansible.builtin.service:
+    name: mysqld
+    state: started
+    enabled: yes
+
+- name: set root password
+  ansible.builtin.command: mysql_secure_installation -set-root-pass RoboShop@1
+
+- name: check mysql port
+  ansible.builtin.command: netstat -lntp
+  register: mysqlport
+
+- name: print mysql port
+  ansible.builtin.debug:
+    msg: "{{ mysqlport }}"
